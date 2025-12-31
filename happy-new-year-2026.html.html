@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy New Year, You Goofball!</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* For that extra goofy vibe */
+            background: linear-gradient(to bottom, #ff6b6b, #4ecdc4);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px #000;
+        }
+        .message {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        .funny-quote {
+            font-style: italic;
+            margin: 20px 0;
+            color: #ffff00;
+        }
+        .game-section {
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+        button {
+            background: #ffeb3b;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #ffc107;
+        }
+        #spinner {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(red, yellow, green, blue, purple, red);
+            position: relative;
+            margin: 20px auto;
+            display: none;
+        }
+        #spinner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid black;
+            transform: translateX(-50%);
+        }
+        #clicker {
+            display: none;
+        }
+        #fireworks {
+            position: relative;
+            height: 200px;
+            background: black;
+            margin: 20px auto;
+            width: 300px;
+            overflow: hidden;
+        }
+        .firework {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            animation: explode 1s ease-out infinite;
+        }
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy New Year, You Magnificent Weirdo!</h1>
+    <div class="message">
+        Wishing you a year full of epic fails, accidental wins, and zero regrets (except maybe that one time you ate that expired yogurt). Cheers to 2026—may it be as unpredictable as your dance moves!
+    </div>
+    <div class="funny-quote">
+        "New Year's Resolution: To stop procrastinating... starting tomorrow."
+    </div>
+    
+    <div class="game-section">
+        <h2>Games to Ring in the New Year!</h2>
+        <button onclick="startSpinner()">Play Resolution Roulette</button>
+        <button onclick="startClicker()">Play Firework Clicker</button>
+        
+        <div id="spinner"></div>
+        <p id="result" style="display: none;"></p>
+        
+        <div id="clicker">
+            <p>Click the screen to launch fireworks! Goal: 10 explosions for a "kaboom" surprise.</p>
+            <div id="fireworks"></div>
+            <p>Explosions: <span id="count">0</span></p>
+        </div>
+    </div>
+    
+    <script>
+        function startSpinner() {
+            document.getElementById('spinner').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            setTimeout(() => {
+                const resolutions = [
+                    "Lose 10 pounds... of luggage!",
+                    "Learn a new skill... like juggling chainsaws.",
+                    "Be more patient... with your slow WiFi.",
+                    "Travel more... to the fridge.",
+                    "Save money... by not buying lottery tickets."
+                ];
+                const randomRes = resolutions[Math.floor(Math.random() * resolutions.length)];
+                document.getElementById('result').innerText = `Your 2026 Resolution: ${randomRes}`;
+                document.getElementById('result').style.display = 'block';
+            }, 2000); // Simulate spin time
+        }
+        
+        let explosionCount = 0;
+        function startClicker() {
+            document.getElementById('clicker').style.display = 'block';
+            document.getElementById('fireworks').addEventListener('click', launchFirework);
+        }
+        
+        function launchFirework(event) {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = event.offsetX + 'px';
+            firework.style.top = event.offsetY + 'px';
+            document.getElementById('fireworks').appendChild(firework);
+            explosionCount++;
+            document.getElementById('count').innerText = explosionCount;
+            if (explosionCount >= 10) {
+                alert("BOOM! You've officially exploded into 2026! 🎆");
+                explosionCount = 0;
+                document.getElementById('count').innerText = 0;
+                document.getElementById('fireworks').innerHTML = '';
+            }
+            setTimeout(() => firework.remove(), 1000);
+        }
+    </script>
+</body>
+</html>
